@@ -40,7 +40,6 @@ void TrafficLights_app(void)
 				{
 					Traffic_State.activeState = Yellow_Blinks ;
 					Traffic_State.PreviousState = Car_GO; 
-					INT0_Button = BTN_UNPRESSED;
 				}
 				else
 				{
@@ -53,12 +52,20 @@ void TrafficLights_app(void)
 				{
 					Traffic_State.activeState = Hold_5s ; 
 					Traffic_State.PreviousState = Pedestrian_Go; 
-					INT0_Button = BTN_UNPRESSED;
 				}
 				else
 				{
-					Traffic_State.activeState = Both_Yellow ;
-					Traffic_State.PreviousState = Pedestrian_Go; 
+					if (Traffic_State.PreviousState == Yellow_Blinks)
+					{
+						Traffic_State.activeState = Yellow_Blinks ;
+						Traffic_State.PreviousState = Pedestrian_Go;
+					}
+					else
+					{
+						Traffic_State.activeState = Both_Yellow ;
+						Traffic_State.PreviousState = Pedestrian_Go; 
+					}
+					
 				}
 		break;
 		case Both_Yellow:
@@ -87,14 +94,14 @@ void TrafficLights_app(void)
 					Traffic_State.PreviousState = Hold_5s;
 		break;
 		case Yellow_Blinks:
-				if (Traffic_State.PreviousState == Hold_5s)
+				if (Traffic_State.PreviousState == Hold_5s||Traffic_State.PreviousState == Pedestrian_Go)
 				{
 					Traffic_State.activeState = Car_GO ; 
 					Traffic_State.PreviousState = Yellow_Blinks;
 				}
 				else
 				{
-					Traffic_State.activeState = Pedestrian_Go ; 
+					Traffic_State.activeState = Pedestrian_Go ;
 					Traffic_State.PreviousState = Yellow_Blinks;
 				}
 		break;
@@ -102,6 +109,7 @@ void TrafficLights_app(void)
 }
 void CarGo(void)
 {
+	
 	INT0_Button = BTN_UNPRESSED; 
 	LED_on(PEDESTRIAN_RED,PORT_A); 
 	LED_on(CARS_GREEN,PORT_A);
@@ -113,6 +121,7 @@ void CarGo(void)
 }
 void PedestrianGo(void)
 {
+	INT0_Button = BTN_UNPRESSED;
 	LED_on(PEDESTRIAN_GREEN,PORT_A);
 	LED_on(CARS_RED,PORT_A);
 	LED_off(CARS_GREEN,PORT_A);
@@ -137,10 +146,13 @@ void Wait_5s(void)
 }
 void YellowBlinks(void)
 {
-	LED_off(CARS_GREEN,PORT_A);
+
+		
+	if(Traffic_State.PreviousState == Pedestrian_Go)
+		LED_on(PEDESTRIAN_GREEN,PORT_A);
 	LED_off(CARS_RED,PORT_A);
 	LED_off(PEDESTRIAN_RED,PORT_A);
-	LED_off(PEDESTRIAN_GREEN,PORT_A);
+	LED_off(CARS_GREEN,PORT_A);
 	int i = 5 ; 
 	while(i--)
 	{
