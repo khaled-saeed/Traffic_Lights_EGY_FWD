@@ -23,3 +23,7 @@ ISR(INT0_vect)
 {
 	(*CallBackFuncINT0_ptr)(); 
 }
+ISR(TIMER2_OVF_vect)
+{
+	(*Timer2_callBack_fptr)(); 
+}

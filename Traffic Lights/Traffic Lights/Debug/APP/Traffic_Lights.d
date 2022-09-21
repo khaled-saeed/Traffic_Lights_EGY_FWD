@@ -7,6 +7,7 @@ APP/Traffic_Lights.d APP/Traffic_Lights.o: ../APP/Traffic_Lights.c \
  ../APP/../HAL/LED_Driver/../../MCAL/Timer_Driver/Timers.h \
  ../APP/../HAL/LED_Driver/../../MCAL/Timer_Driver/../../RegisterFile.h \
  ../APP/../HAL/LED_Driver/../../MCAL/Timer_Driver/../../HAL/LED_Driver/LED.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../APP/../HAL/Button_Driver/Button.h \
  ../APP/../HAL/Button_Driver/../DIO_Driver/DIO.h \
  ../APP/../MCAL/Timer_Driver/Timers.h \
@@ -42,6 +43,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../APP/../HAL/LED_Driver/../../MCAL/Timer_Driver/../../RegisterFile.h:
 
 ../APP/../HAL/LED_Driver/../../MCAL/Timer_Driver/../../HAL/LED_Driver/LED.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
 ../APP/../HAL/Button_Driver/Button.h:
 

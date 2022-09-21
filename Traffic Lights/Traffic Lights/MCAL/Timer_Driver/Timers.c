@@ -7,6 +7,8 @@
 #include "Timers.h"
 // Comon Functions 
 uint32_t NO_ofOverFlows;
+uint32_t NO_ofOverFlows_T2;
+extern bool Time_not_passed ; 
 extern uint8_t  Stop_Delay; 
 void Timer0_setCallBackFunc(fptr_t callBackFunc)
 {
@@ -207,3 +209,43 @@ void Timer0_Counter_Handler(void)
 	TCNT0 = 0 ; 
 }
 
+void Timer2_Start(CLK_SOURCE_t clkSrc)
+{
+	 TCCR2 |= (clkSrc<<CS00) ;
+}
+void Timer2_Stop()
+{
+	 TCCR2 &=~(3U<<COM20);
+	 TCCR2 &= ~(7<<CS20) ;
+}
+ void Timer2_InitNormal_Polling()
+{
+	TCCR2 &= ~(NORMAL_MODE<<WGM20);		//select Normal Mode
+	TCCR2 &= ~(NORMAL_MODE<<WGM21);		//select Normal Mode
+
+}
+void Timer2_InitNormal_Interrupt(InterruptType_t interrupt)
+{
+	TCCR2 &= ~(NORMAL_MODE<<WGM20);		//select Normal Mode
+	TCCR2 &= ~(NORMAL_MODE<<WGM21);		//select Normal Mode
+	TIMSK |=(interrupt<<TOIE2);			// enable the interrpt either compare match or overflow
+}
+ void Timer2_SetValue_ms(uint32_t ms){
+	 float TickTime =(float)1/F_CPU;
+	 NO_ofOverFlows_T2 = (uint32_t)(ms/(256*TickTime*1000)) +1;
+	 TCNT0 = (uint8_t)((NO_ofOverFlows_T2*256) - (ms*1000))/NO_ofOverFlows_T2;
+	 Timer2_Start(InternalCLK_NoPrescaling);
+ }
+void Timer2_NormalMode_Handler(void)
+{
+	 	static volatile  uint32_t NoOfOverFlows = 0 ;
+	 	if (NoOfOverFlows++>= NO_ofOverFlows_T2 )
+	 	{
+		 	Time_not_passed = false ; 
+		 	NoOfOverFlows = 0 ;
+	 	}
+}
+void Timer2_setCallBackFunc(fptr_t callBackFunc)
+{
+	Timer2_callBack_fptr = callBackFunc ;
+}

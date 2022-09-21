@@ -10,6 +10,7 @@ MCAL/Interrupts_Driver/Interrupt.d MCAL/Interrupts_Driver/Interrupt.o: \
  ../MCAL/Interrupts_Driver/../../HAL/LED_Driver/../../MCAL/Timer_Driver/Timers.h \
  d:\egy_fwd\embedded\traffic_lights\traffic\ lights\traffic\ lights\registerfile.h \
  d:\egy_fwd\embedded\traffic_lights\traffic\ lights\traffic\ lights\hal\led_driver\led.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../MCAL/Interrupts_Driver/../Timer_Driver/Timers.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
@@ -42,6 +43,8 @@ d:\egy_fwd\embedded\traffic_lights\traffic\ lights\traffic\ lights\registerfile.
 d:\egy_fwd\embedded\traffic_lights\traffic\ lights\traffic\ lights\registerfile.h:
 
 d:\egy_fwd\embedded\traffic_lights\traffic\ lights\traffic\ lights\hal\led_driver\led.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
 ../MCAL/Interrupts_Driver/../Timer_Driver/Timers.h:
 

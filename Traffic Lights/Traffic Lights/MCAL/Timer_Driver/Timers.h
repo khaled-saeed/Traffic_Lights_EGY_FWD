@@ -13,6 +13,9 @@
 #endif
 #include "../../RegisterFile.h"
 #include "../../HAL/LED_Driver/LED.h"
+
+#include <stdbool.h>
+
 //#include "../Delay_Driver/Delay.h"
 /************************************************************************/
 /*							 Pins definitions                           */
@@ -30,6 +33,21 @@
 #define	 PSR10				0
 #define	 TOV0				0
 #define	 OCF0				1
+
+
+#define  FOC2				7
+#define  WGM20				6
+#define  COM21				5
+#define  COM20				4
+#define  WGM21				3
+#define  CS22				2
+#define  CS21				1
+#define  CS20				0
+#define  OCIE2				7
+#define  TOIE2				6
+#define	 PSR				1
+#define	 TOV2				6
+#define	 OCF2				7
 /************************************************************************/
 /*							 Timer Modes                                */
 /************************************************************************/
@@ -82,6 +100,7 @@ typedef enum{
 /************************************************************************/
 typedef void(*fptr_t)(void); 
 fptr_t Timer0_callBack_fptr ;								// pointer For Callback Function 
+fptr_t Timer2_callBack_fptr ;								// pointer For Callback Function
 
 
 /*
@@ -232,6 +251,18 @@ void Timer0_EventCount_init();
  * Output   nothing
  */
 void Timer0_Counter_Handler(void);
+
+
+/************************************************************************/
+/*					             Timer 2                                */
+/************************************************************************/
+ void Timer2_Start(CLK_SOURCE_t clkSrc);
+ void Timer2_Stop();
+void Timer2_InitNormal_Polling();
+void Timer2_InitNormal_Interrupt(InterruptType_t interrupt);
+void Timer2_SetValue_ms(uint32_t ms);
+void Timer2_NormalMode_Handler(void);
+void Timer2_setCallBackFunc(fptr_t callBackFunc);
 
 
 #endif /* TIMERS_H_ */

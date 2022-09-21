@@ -8,6 +8,7 @@
 #include "Traffic_lights.h"
 STATE_t Traffic_State; 
 extern ButtonStatus INT0_Button ; 
+bool Normal_mode = true ; 
 fptr States[5]= {&CarGo,&PedestrianGo ,&BothYellow ,&Wait_5s ,&YellowBlinks };
 void TrafficLights_init(void) 
 {
@@ -21,11 +22,15 @@ void TrafficLights_init(void)
 	/* Initialize the Button Pin*/
 	BUTTON_init(PEDESTRIAN_BUTTON,PORT_D); 
 	/* Initialize External Interrupt*/
-	EX_INT0_init(RISING_EDGE);
+	EX_INT0_init(RISING_FALLING_EDGE);
 	/* Initialize Timer0 in normal mode*/
 	Timer0_InitNormal_Polling();
 	/* Set the callback function for the interrupt*/
 	setCallBackFunc_INT0(&INT0_Handler); 
+	
+	Timer2_InitNormal_Interrupt(OVERFLOW);
+	
+	Timer2_setCallBackFunc(Timer2_NormalMode_Handler);
 	Traffic_State.activeState = Car_GO;
 	Traffic_State.PreviousState = Car_GO ; 
 	sei(); 
@@ -43,7 +48,7 @@ void TrafficLights_app(void)
 				}
 				else
 				{
-					Traffic_State.activeState = Both_Yellow ;
+					Traffic_State.activeState = Yellow_Blinks ;
 					Traffic_State.PreviousState = Car_GO; 
 				}
 		break;
@@ -62,7 +67,7 @@ void TrafficLights_app(void)
 					}
 					else
 					{
-						Traffic_State.activeState = Both_Yellow ;
+						Traffic_State.activeState = Yellow_Blinks ;
 						Traffic_State.PreviousState = Pedestrian_Go; 
 					}
 					
@@ -147,9 +152,13 @@ void Wait_5s(void)
 void YellowBlinks(void)
 {
 
-		
-	if(Traffic_State.PreviousState == Pedestrian_Go)
+	if(Traffic_State.PreviousState == Pedestrian_Go && !Normal_mode)
+	{
 		LED_on(PEDESTRIAN_GREEN,PORT_A);
+		Normal_mode = true; 
+	}
+	else
+		LED_off(PEDESTRIAN_GREEN,PORT_A);
 	LED_off(CARS_RED,PORT_A);
 	LED_off(PEDESTRIAN_RED,PORT_A);
 	LED_off(CARS_GREEN,PORT_A);

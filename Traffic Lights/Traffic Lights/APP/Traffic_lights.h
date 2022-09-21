@@ -12,6 +12,7 @@
 #include "../HAL/Button_Driver/Button.h"
 #include "../MCAL/Timer_Driver/Timers.h"
 #include "../MCAL/Interrupts_Driver/Interrupt.h"
+#include <stdbool.h>
 #define  PEDESTRIAN_BUTTON	2
 
 enum Leds{
